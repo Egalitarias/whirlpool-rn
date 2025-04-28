@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 import Animated, {
+  runOnJS,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
@@ -38,8 +39,9 @@ const WordReanimated = ({
       pressed.value = true;
     })
     .onFinalize(() => {
+      "worklet";
       console.log("onFinalize()");
-      whirlPoolEvent({ wordPressed: word });
+      runOnJS(whirlPoolEvent)({ wordPressed: word });
       pressed.value = false;
     });
 
