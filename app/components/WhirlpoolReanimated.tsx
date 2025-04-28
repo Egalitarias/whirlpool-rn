@@ -1,5 +1,6 @@
 import React, { useCallback, ReactElement, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -35,18 +36,20 @@ const WhirlpoolReanimated = (): ReactElement => {
   }, [spinWords]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.whirlpool}>
-        {words.map((word, index) => (
-          <WordReanimated
-            key={index}
-            word={word}
-            wordIndex={index}
-            wordPosition={{ angle: angle, radius: radius }}
-          />
-        ))}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.whirlpool}>
+          {words.map((word, index) => (
+            <WordReanimated
+              key={index}
+              word={word}
+              wordIndex={index}
+              wordPosition={{ angle: angle, radius: radius }}
+            />
+          ))}
+        </View>
       </View>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
