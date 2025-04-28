@@ -38,7 +38,12 @@ const WhirlpoolReanimated = (): ReactElement => {
     <View style={styles.container}>
       <View style={styles.whirlpool}>
         {words.map((word, index) => (
-          <WordReanimated key={index} word={word} wordIndex={index} />
+          <WordReanimated
+            key={index}
+            word={word}
+            wordIndex={index}
+            wordPosition={{ angle: angle.value, radius: radius.value }}
+          />
         ))}
       </View>
     </View>

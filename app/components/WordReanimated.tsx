@@ -1,42 +1,35 @@
 import React, { useCallback, useEffect } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-} from "react-native-reanimated";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
+type WordPosition = {
+  angle: number;
+  radius: number;
+};
 type WordReanimated = {
   word: string;
   wordIndex: number;
+  wordPosition: WordPosition;
 };
 
-const WordReanimated = ({ word, wordIndex }: WordReanimated) => {
-  const angle = useSharedValue<number>((wordIndex * Math.PI) / 3);
-  const radius = useSharedValue<number>(180);
-
-  const spinWords = useCallback(() => {
-    angle.value = withRepeat(
-      withTiming(Math.PI * 2, { duration: 30000, easing: Easing.linear }),
-      -1
-    );
-  }, []);
-
-  useEffect(() => {
-    spinWords();
-  }, [spinWords]);
-
+const WordReanimated = ({ word, wordIndex, wordPosition }: WordReanimated) => {
   const wordAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
         translateX:
-          Math.cos(angle.value + (Math.PI * 5) / 3) * radius.value - 40,
+          Math.cos(
+            (wordIndex * Math.PI) / 3 + wordPosition.angle + (Math.PI * 5) / 3
+          ) *
+            wordPosition.radius -
+          40,
       },
       {
         translateY:
-          Math.sin(angle.value + (Math.PI * 5) / 3) * radius.value - 40,
+          Math.sin(
+            (wordIndex * Math.PI) / 3 + wordPosition.angle + (Math.PI * 5) / 3
+          ) *
+            wordPosition.radius -
+          40,
       },
     ],
   }));
