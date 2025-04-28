@@ -53,9 +53,7 @@ const WordReanimated = ({
             (wordIndex * Math.PI) / 3 +
               wordPosition.angle.value +
               (Math.PI * 5) / 3
-          ) *
-            wordPosition.radius.value -
-          40,
+          ) * wordPosition.radius.value,
       },
       {
         translateY:
@@ -63,9 +61,7 @@ const WordReanimated = ({
             (wordIndex * Math.PI) / 3 +
               wordPosition.angle.value +
               (Math.PI * 5) / 3
-          ) *
-            wordPosition.radius.value -
-          40,
+          ) * wordPosition.radius.value,
       },
     ],
   }));
