@@ -1,21 +1,48 @@
-import React, { useCallback, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
 import Animated, {
   SharedValue,
   useAnimatedStyle,
+  useSharedValue,
 } from "react-native-reanimated";
 
-type WordPosition = {
+export type WordPosition = {
   angle: SharedValue<number>;
   radius: SharedValue<number>;
 };
-type WordReanimated = {
+
+export type WhirlpoolState = {
+  wordPressed: string | null;
+};
+
+type WordReanimatedProps = {
   word: string;
   wordIndex: number;
   wordPosition: WordPosition;
+  whirlPoolEvent: (whirlpoolState: WhirlpoolState) => void;
 };
 
-const WordReanimated = ({ word, wordIndex, wordPosition }: WordReanimated) => {
+const WordReanimated = ({
+  word,
+  wordIndex,
+  wordPosition,
+  whirlPoolEvent,
+}: WordReanimatedProps) => {
+  const pressed = useSharedValue<boolean>(false);
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      console.log("onBegin()");
+      pressed.value = true;
+    })
+    .onFinalize(() => {
+      console.log("onFinalize()");
+      whirlPoolEvent({ wordPressed: word });
+      pressed.value = false;
+    });
+
   const wordAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -42,15 +69,11 @@ const WordReanimated = ({ word, wordIndex, wordPosition }: WordReanimated) => {
   }));
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        console.log(word);
-      }}
-    >
+    <GestureDetector gesture={tap}>
       <Animated.Text style={[styles.word, wordAnimatedStyle]}>
         {word}
       </Animated.Text>
-    </TouchableOpacity>
+    </GestureDetector>
   );
 };
 

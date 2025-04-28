@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import WordReanimated from "./WordReanimated";
+import WordReanimated, { WhirlpoolState } from "./WordReanimated";
 
 const WhirlpoolReanimated = (): ReactElement => {
   const words = ["Word0", "Word1", "Word2", "Word3", "Word4", "Word5"];
@@ -26,10 +26,17 @@ const WhirlpoolReanimated = (): ReactElement => {
 
   const spinWords = useCallback(() => {
     angle.value = withRepeat(
-      withTiming(Math.PI * 2, { duration: 30000, easing: Easing.linear }),
+      withTiming(Math.PI * 2, { duration: 300000, easing: Easing.linear }),
       -1
     );
   }, []);
+
+  const whirlpoolEventCallback = useCallback(
+    (whirlpoolState: WhirlpoolState) => {
+      console.log("whirlpoolEventCallback ", whirlpoolState.wordPressed);
+    },
+    []
+  );
 
   useEffect(() => {
     spinWords();
@@ -45,6 +52,7 @@ const WhirlpoolReanimated = (): ReactElement => {
               word={word}
               wordIndex={index}
               wordPosition={{ angle: angle, radius: radius }}
+              whirlPoolEvent={whirlpoolEventCallback}
             />
           ))}
         </View>
