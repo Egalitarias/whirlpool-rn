@@ -10,10 +10,11 @@ import Animated, {
 
 type WordReanimated = {
   word: string;
+  wordIndex: number;
 };
 
-const WordReanimated = ({ word }: WordReanimated) => {
-  const angle = useSharedValue<number>(0);
+const WordReanimated = ({ word, wordIndex }: WordReanimated) => {
+  const angle = useSharedValue<number>((wordIndex * Math.PI) / 3);
   const radius = useSharedValue<number>(180);
 
   const spinWords = useCallback(() => {
@@ -58,15 +59,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#11111111",
+    backgroundColor: "#00000000",
   },
   word: {
     position: "absolute",
     padding: 10,
     borderWidth: 3,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#00000000",
     fontSize: 20,
     fontWeight: "bold",
+  },
+  touch: {
+    backgroundColor: "#33333333",
   },
 });
 

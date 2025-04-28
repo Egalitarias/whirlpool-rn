@@ -11,6 +11,7 @@ import Animated, {
 import WordReanimated from "./WordReanimated";
 
 const WhirlpoolReanimated = (): ReactElement => {
+  const words = ["Word0", "Word1", "Word2", "Word3", "Word4", "Word5"];
   const angle = useSharedValue<number>(0);
   const radius = useSharedValue<number>(180);
 
@@ -33,130 +34,13 @@ const WhirlpoolReanimated = (): ReactElement => {
     spinWords();
   }, [spinWords]);
 
-  const word0AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: Math.cos(angle.value) * radius.value - 40 },
-      { translateY: Math.sin(angle.value) * radius.value - 40 },
-    ],
-  }));
-
-  const word1AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: Math.cos(angle.value + Math.PI / 3) * radius.value - 40 },
-      { translateY: Math.sin(angle.value + Math.PI / 3) * radius.value - 40 },
-    ],
-  }));
-
-  const word2AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX:
-          Math.cos(angle.value + (Math.PI * 2) / 3) * radius.value - 40,
-      },
-      {
-        translateY:
-          Math.sin(angle.value + (Math.PI * 2) / 3) * radius.value - 40,
-      },
-    ],
-  }));
-
-  const word3AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX:
-          Math.cos(angle.value + (Math.PI * 3) / 3) * radius.value - 40,
-      },
-      {
-        translateY:
-          Math.sin(angle.value + (Math.PI * 3) / 3) * radius.value - 40,
-      },
-    ],
-  }));
-
-  const word4AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX:
-          Math.cos(angle.value + (Math.PI * 4) / 3) * radius.value - 40,
-      },
-      {
-        translateY:
-          Math.sin(angle.value + (Math.PI * 4) / 3) * radius.value - 40,
-      },
-    ],
-  }));
-
-  const word5AnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX:
-          Math.cos(angle.value + (Math.PI * 5) / 3) * radius.value - 40,
-      },
-      {
-        translateY:
-          Math.sin(angle.value + (Math.PI * 5) / 3) * radius.value - 40,
-      },
-    ],
-  }));
-
   return (
     <View style={styles.container}>
-      <Animated.View style={styles.whirlpool}>
-        <TouchableOpacity
-          onPress={() => {
-            pullWordsIn();
-            console.log("Word0");
-          }}
-        >
-          <Animated.Text style={[styles.word, word0AnimatedStyle]}>
-            Word0
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            pushWordsOut();
-            console.log("Word1");
-          }}
-        >
-          <Animated.Text style={[styles.word, word1AnimatedStyle]}>
-            Word1
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Word2");
-          }}
-        >
-          <Animated.Text style={[styles.word, word2AnimatedStyle]}>
-            Word2
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Word3");
-          }}
-        >
-          <Animated.Text style={[styles.word, word3AnimatedStyle]}>
-            Word3
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Word4");
-          }}
-        >
-          <Animated.Text style={[styles.word, word4AnimatedStyle]}>
-            Word4
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Word5");
-          }}
-        >
-          <WordReanimated word={"Word5"} />
-        </TouchableOpacity>
-      </Animated.View>
+      <View style={styles.whirlpool}>
+        {words.map((word, index) => (
+          <WordReanimated key={index} word={word} wordIndex={index} />
+        ))}
+      </View>
     </View>
   );
 };
