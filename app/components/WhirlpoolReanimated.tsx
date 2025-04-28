@@ -42,7 +42,7 @@ const WhirlpoolReanimated = (): ReactElement => {
             key={index}
             word={word}
             wordIndex={index}
-            wordPosition={{ angle: angle.value, radius: radius.value }}
+            wordPosition={{ angle: angle, radius: radius }}
           />
         ))}
       </View>

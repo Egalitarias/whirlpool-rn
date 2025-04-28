@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated, {
+  SharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 type WordPosition = {
-  angle: number;
-  radius: number;
+  angle: SharedValue<number>;
+  radius: SharedValue<number>;
 };
 type WordReanimated = {
   word: string;
@@ -18,17 +21,21 @@ const WordReanimated = ({ word, wordIndex, wordPosition }: WordReanimated) => {
       {
         translateX:
           Math.cos(
-            (wordIndex * Math.PI) / 3 + wordPosition.angle + (Math.PI * 5) / 3
+            (wordIndex * Math.PI) / 3 +
+              wordPosition.angle.value +
+              (Math.PI * 5) / 3
           ) *
-            wordPosition.radius -
+            wordPosition.radius.value -
           40,
       },
       {
         translateY:
           Math.sin(
-            (wordIndex * Math.PI) / 3 + wordPosition.angle + (Math.PI * 5) / 3
+            (wordIndex * Math.PI) / 3 +
+              wordPosition.angle.value +
+              (Math.PI * 5) / 3
           ) *
-            wordPosition.radius -
+            wordPosition.radius.value -
           40,
       },
     ],
