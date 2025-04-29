@@ -1,18 +1,47 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-import { WhirlpoolState } from "./WhirlpoolTypes";
+import { shuffleArray } from "./Utils";
+import { PipeGameModel, WhirlpoolState } from "./WhirlpoolTypes";
 import Whirlpool from "./WhirlpoolReanimated";
 
 const WhirlpoolTest = (): ReactElement => {
-  const INIT_PIPE_GAME_MODEL = [
-    { words: ["About", "Far", "Laugh", "Shall", "Better"], heartWord: 3 },
-    { words: ["Full", "Light", "Show", "Bring", "Today"], heartWord: 1 },
-    { words: ["Got", "Long", "Six", "Carry", "Grow"], heartWord: 2 },
-    { words: ["Much", "Small", "Clean", "Hold", "Own"], heartWord: 0 },
-    { words: ["Myself", "Start", "Cut", "Hot", "Never"], heartWord: 4 },
-    { words: ["Ten", "Done", "Hurt", "Only", "Done"], heartWord: 2 },
-  ];
+  // https://docs.google.com/spreadsheets/d/10DRU4UuON-TN7QBVEpYt9qj40iuQp4_cbKx4nggbzDI/edit?gid=2131824472#gid=2131824472
+  const LETTER_TO_SOUND_MATRIX = {
+    words: [
+      "Their",
+      "Shoe",
+      "Could",
+      "Would",
+      "Should",
+      "Eight",
+      "Here",
+      "There",
+      "Where",
+      "Because",
+      "Friend",
+      "School",
+    ],
+    heartWord: "People",
+  };
+
+  const NUMBER_OF_ROUNDS = 6;
+  const initPipeGameModel = (): PipeGameModel => {
+    const pipeGameModel = [];
+    for (let roundIndex = 0; roundIndex < NUMBER_OF_ROUNDS; ++roundIndex) {
+      const shuffledMatrixWords = shuffleArray(LETTER_TO_SOUND_MATRIX.words);
+      const roundWords = shuffledMatrixWords.slice(0, 5);
+      roundWords.push(LETTER_TO_SOUND_MATRIX.heartWord);
+      const shuffledRoundWords = shuffleArray(roundWords);
+      const heartWord = shuffledRoundWords.indexOf(
+        LETTER_TO_SOUND_MATRIX.heartWord
+      );
+
+      pipeGameModel.push({ words: shuffledRoundWords, heartWord: heartWord });
+    }
+    return pipeGameModel;
+  };
+
   const INIT_WHIRLPOOL_STATE = {
     state: "idle",
     roundIndex: 0,
@@ -84,7 +113,7 @@ const WhirlpoolTest = (): ReactElement => {
     <View style={styles.container}>
       <Text style={styles.title}>WhirlpoolTest</Text>
       <Whirlpool
-        pipeGameModel={INIT_PIPE_GAME_MODEL}
+        pipeGameModel={initPipeGameModel()}
         action={action}
         whirlpoolStateCallback={whirlpoolStateCallback}
         wordOnPress={wordOnPressCallback}
