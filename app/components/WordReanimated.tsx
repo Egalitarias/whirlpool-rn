@@ -131,8 +131,10 @@ const WordReanimated = ({
     .onFinalize(() => {
       "worklet";
       console.log("onFinalize()");
-      setPressed(true);
-      runOnJS(wordOnPress)(word, word === heartWord);
+      runOnJS(() => {
+        setPressed(true);
+        wordOnPress(word, word === heartWord);
+      });
     });
 
   const wordAnimatedStyle = useAnimatedStyle(() => ({
