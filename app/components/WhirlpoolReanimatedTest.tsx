@@ -5,7 +5,7 @@ import { shuffleArray } from "./Utils";
 import { PipeGameModel, WhirlpoolState } from "./WhirlpoolTypes";
 import Whirlpool from "./WhirlpoolReanimated";
 
-const WhirlpoolTest = (): ReactElement => {
+const WhirlpoolReanimatedTest = (): ReactElement => {
   // https://docs.google.com/spreadsheets/d/10DRU4UuON-TN7QBVEpYt9qj40iuQp4_cbKx4nggbzDI/edit?gid=2131824472#gid=2131824472
   const LETTER_TO_SOUND_MATRIX = {
     words: [
@@ -205,4 +205,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-export default WhirlpoolTest;
+export default WhirlpoolReanimatedTest;
