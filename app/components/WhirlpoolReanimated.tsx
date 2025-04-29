@@ -1,4 +1,4 @@
-import React, { useCallback, ReactElement, useEffect } from "react";
+import React, { useCallback, useState, ReactElement, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
@@ -25,6 +25,19 @@ const WhirlpoolReanimated = ({
   whirlpoolStateCallback,
   wordOnPress,
 }: WhirlpoolReanimatedProps): ReactElement => {
+  const INIT_WHIRLPOOL_STATE = {
+    state: "Idle",
+    roundIndex: 0,
+    heartWord: "",
+    wordPressed: "",
+    heartWordPressed: false,
+    pass: true,
+    complete: false,
+  };
+
+  const [whirlpoolState, setWhirlpoolState] =
+    useState<WhirlpoolState>(INIT_WHIRLPOOL_STATE);
+
   const words = ["Word0", "Word1", "Word2", "Word3", "Word4", "Word5"];
   const angle = useSharedValue<number>(0);
   const radius = useSharedValue<number>(180);
@@ -44,9 +57,9 @@ const WhirlpoolReanimated = ({
     );
   }, []);
 
-  const whirlpoolEventCallback = useCallback(
-    (whirlpoolState: WhirlpoolState) => {
-      console.log("whirlpoolEventCallback ", whirlpoolState.wordPressed);
+  const wordOnPressCallback = useCallback(
+    (wordPressed: string, heartWordPressed: boolean) => {
+      console.log("wordOnPressCallback ", wordPressed, heartWordPressed);
     },
     []
   );
@@ -55,6 +68,8 @@ const WhirlpoolReanimated = ({
     spinWords();
   }, [spinWords]);
 
+  //                     <Word key={index} round={pipeGameModel[whirlpoolState.roundIndex]} wordIndex={index} wordOnPress={wordOnPressCallback} wordPosition={wordPosition} wordCircleDiameter={WORD_CIRCLE_DIAMETER} action={action} />
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -62,10 +77,11 @@ const WhirlpoolReanimated = ({
           {words.map((word, index) => (
             <WordReanimated
               key={index}
-              word={word}
+              round={pipeGameModel[whirlpoolState.roundIndex]}
               wordIndex={index}
               wordPosition={{ angle: angle, radius: radius }}
-              whirlPoolEvent={whirlpoolEventCallback}
+              wordOnPress={wordOnPressCallback}
+              action={action}
             />
           ))}
         </View>

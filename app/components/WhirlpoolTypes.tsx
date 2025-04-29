@@ -1,6 +1,6 @@
 export type RoundModel = {
-  words: string[], 
-  heartWord: number
+  words: string[];
+  heartWord: number;
 };
 
 export type WordPosition = {
@@ -12,5 +12,11 @@ export type WordPosition = {
 export type PipeGameModel = RoundModel[];
 
 export type WhirlpoolState = {
-  wordPressed: string | null;
+  state: string;
+  roundIndex: number;
+  heartWord: string;
+  wordPressed: string;
+  heartWordPressed: boolean;
+  pass: boolean;
+  complete: boolean;
 };
