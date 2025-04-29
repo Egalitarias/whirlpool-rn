@@ -56,3 +56,6 @@ To run your project, navigate to the directory and run one of the following npm 
 - npm run ios
 - npm run web
 
+
+npx expo run:android
+

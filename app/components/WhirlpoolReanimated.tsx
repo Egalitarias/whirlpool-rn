@@ -9,9 +9,22 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import WordReanimated, { WhirlpoolState } from "./WordReanimated";
+import { PipeGameModel, WhirlpoolState } from "./WhirlpoolTypes";
+import WordReanimated from "./WordReanimated";
 
-const WhirlpoolReanimated = (): ReactElement => {
+type WhirlpoolReanimatedProps = {
+  pipeGameModel: PipeGameModel;
+  action: string;
+  whirlpoolStateCallback: (whirlpoolState: WhirlpoolState) => void;
+  wordOnPress: (wordPressed: string, heartWordPressed: boolean) => void;
+};
+
+const WhirlpoolReanimated = ({
+  pipeGameModel,
+  action,
+  whirlpoolStateCallback,
+  wordOnPress,
+}: WhirlpoolReanimatedProps): ReactElement => {
   const words = ["Word0", "Word1", "Word2", "Word3", "Word4", "Word5"];
   const angle = useSharedValue<number>(0);
   const radius = useSharedValue<number>(180);

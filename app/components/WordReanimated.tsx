@@ -9,13 +9,11 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 
+import { WhirlpoolState } from "./WhirlpoolTypes";
+
 export type WordPosition = {
   angle: SharedValue<number>;
   radius: SharedValue<number>;
-};
-
-export type WhirlpoolState = {
-  wordPressed: string | null;
 };
 
 type WordReanimatedProps = {

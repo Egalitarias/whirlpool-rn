@@ -2,11 +2,12 @@ import React, { ReactElement } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import WhirlpoolReanimated from "../components/WhirlpoolReanimated";
+import WhirlpoolTest from "../components/WhirlpoolTest";
 
 const Screen = (): ReactElement => {
   return (
     <View style={styles.container}>
-      <WhirlpoolReanimated />
+      <WhirlpoolTest />
     </View>
   );
 };
